@@ -93,4 +93,5 @@ class User {
         $this->idFacebook = $idFacebook;
     }
 }
+
 ?>
