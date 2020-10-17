@@ -1,17 +1,14 @@
 <?php
 
-require_once "login.php";
+require_once "FacebookConfig.php";
 require "Config/Autoload.php";
+require "Config/Config.php";
 
 use Config\Autoload as Autoload;
+use Config\Router 	as Router;
+use Config\Request 	as Request;
 
 Autoload::start();
-
-$fb = new Facebook\Facebook([
-    'app_id' => '{app-id}',
-    'app_secret' => '{app-secret}',
-    'default_graph_version' => 'v2.10',
-    ]);
   
   $helper = $fb->getRedirectLoginHelper();
   
@@ -42,19 +39,20 @@ $fb = new Facebook\Facebook([
   }
   
   // Logged in
-  echo '<h3>Access Token</h3>';
-  var_dump($accessToken->getValue());
+  
+  //echo '<h3>Access Token</h3>';
+  //var_dump($accessToken->getValue());
   
   // The OAuth 2.0 client handler helps us manage access tokens
   $oAuth2Client = $fb->getOAuth2Client();
   
   // Get the access token metadata from /debug_token
   $tokenMetadata = $oAuth2Client->debugToken($accessToken);
-  echo '<h3>Metadata</h3>';
-  var_dump($tokenMetadata);
+  //echo '<h3>Metadata</h3>';
+  //var_dump($tokenMetadata);
   
   // Validation (these will throw FacebookSDKException's when they fail)
-  $tokenMetadata->validateAppId($config['app_id']);
+  $tokenMetadata->validateAppId($config[$app_id]);
   // If you know the user ID this access token belongs to, you can validate it here
   //$tokenMetadata->validateUserId('123');
   $tokenMetadata->validateExpiration();
