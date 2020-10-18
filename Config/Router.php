@@ -1,5 +1,4 @@
 <?php 
-use Config\Request as Request;
 
 namespace Config;
 
