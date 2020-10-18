@@ -1,4 +1,7 @@
-<?php namespace Config;
+<?php 
+use Config\Request as Request;
+
+namespace Config;
 
     class Router {
 

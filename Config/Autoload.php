@@ -6,7 +6,8 @@ class Autoload {
           {
                $url = ROOT . str_replace("\\", "/", $classNotFound)  . ".php";
                $url = strtolower($url);
-               include_once($url);
+               //include_once($url);
           });
      }
 }
+?>
