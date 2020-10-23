@@ -1,0 +1,30 @@
+[
+    {
+        "id": 0,
+        "name": "Ambassador",
+        "address": "Cordoba 1673",
+        "ticket_price": "250",
+        "total_capacity": "900"
+    },
+    {
+        "id": 1,
+        "name": "Aldrey",
+        "address": "Paseo Aldrey ",
+        "ticket_price": "400",
+        "total_capacity": "500"
+    },
+    {
+        "id": 2,
+        "name": "Cine del Paseo",
+        "address": "Diag. Pueyrredon 3058",
+        "ticket_price": "300",
+        "total_capacity": "300"
+    },
+    {
+        "id": 3,
+        "name": "cine",
+        "address": "calle",
+        "ticket_price": "250",
+        "total_capacity": "500"
+    }
+]

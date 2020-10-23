@@ -1,0 +1,22 @@
+[
+    {
+        "user": "admin@utn.com",
+        "pass": "admin",
+        "rol": "admin"
+    },
+    {
+        "user": "user@utn.com",
+        "pass": "user",
+        "rol": "user"
+    },
+    {
+        "user": "gianniricciardi3779@gmail.com",
+        "pass": "asd",
+        "rol": "user"
+    },
+    {
+        "user": "dante_GH@hotmail.com.ar",
+        "pass": "21312",
+        "rol": "user"
+    }
+]
