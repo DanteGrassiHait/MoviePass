@@ -1,56 +1,64 @@
 <?php
 namespace Models;
 
-class Cinema {
+class Cinema
+{
     private $id;
     private $name;
     private $address;
-    private $totalCapacity;
-    private $inputValue;
+    private $ticket_price;
+    private $total_capacity;
 
-    public function __construct()
+
+    public function getId()
     {
-        
+        return $this->id;
     }
 
-    public function getId(){
-		return $this->id;
-	}
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
-	public function setId($id){
-		$this->id = $id;
-	}
+    public function getName()
+    {
+        return $this->name;
+    }
 
-	public function getName(){
-		return $this->name;
-	}
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 
-	public function setName($name){
-		$this->name = $name;
-	}
+    public function getAddress()
+    {
+        return $this->address;
+    }
 
-	public function getAddress(){
-		return $this->address;
-	}
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    }
 
-	public function setAddress($address){
-		$this->address = $address;
-	}
+    public function getTicketPrice()
+    {
+        return $this->ticket_price;
+    }
 
-	public function getTotalCapacity(){
-		return $this->totalCapacity;
-	}
+    public function setTicketPrice($ticket_price)
+    {
+        $this->ticket_price = $ticket_price;
+    }
 
-	public function setTotalCapacity($totalCapacity){
-		$this->totalCapacity = $totalCapacity;
-	}
+    public function getTotalCapacity()
+    {
+        return $this->total_capacity;
+    }
 
-	public function getInputValue(){
-		return $this->inputValue;
-	}
-
-	public function setInputValue($inputValue){
-		$this->inputValue = $inputValue;
-	}
+    public function setTotalCapacity($total_capacity)
+    {
+        $this->total_capacity = $total_capacity;
+    }    
 }
+
 ?>

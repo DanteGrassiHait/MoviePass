@@ -1,82 +1,72 @@
-<?php
+<?php 
 
 namespace Models;
 
-class Movie {
-    private $name;
-    private $score;
-    private $uploadingDate;
-    private $genres;
-    private $director;
-    private $duration;
 
-    public function __construct() 
+class Movie
+{
+    private $id_api;
+    private $description;
+    private $name;
+    private $image;
+    private $genre_ids;
+    private $language;
+
+    public function __construct()
     {
-        $this->genres = array();
-    }    
-    
-    public function getName() {
+        
+    }
+
+     public function getLanguage()
+    {
+        return $this->language;
+    }
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
+     public function getImage()
+    {
+        return $this->image;
+    }
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+	 public function getIdApi()
+    {
+        return $this->id_api;
+    }
+    public function setIdApi($id_api)
+    {
+        $this->id_api = $id_api;
+    }
+
+    public function getDescription ()
+    {
+        return $this->description;
+    }
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+    public function getName ()
+    {
         return $this->name;
     }
-    
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
     }
-    
-    public function getScore() {
-        return $this->score;
+   
+     public function getGenreIds()
+    {
+        return $this->genre_ids;
     }
-    
-    public function setScore($score) {
-        $this->score = $score;
-    }
-    
-    public function getUploadingDate() {
-        return $this->uploadingDate;
-    }
-    
-    public function setUploadingDate($uploadingDate) {
-        $this->uploadingDate = $uploadingDate;
-    }
-    
-    public function getGenres() {
-        return $this->genres;
-    }
-    
-    public function getNameGenres() {
-        $string = "";
-        foreach($this->genres as $genre) {
-            $string = $string . " | " . $genre->getName();
-        }
-        $string = $string . " | "; 
-        return $string;
-    }
-    
-    public function setGenres($genres) {
-        $this->genres = $genres;
-    }
-    
-    public function addGenre($genre) {
-        array_push($this->genres, $genre);
-    }
-
-    public function getDirector(){
-		return $this->director;
-	}
-
-	public function setDirector($director){
-		$this->director = $director;
-	}
-    
-    public function getDuration(){
-        return $this->duration;
-    }
-    
-    public function setDuration($duration){
-        $this->duration = $duration;
+    public function setGenreIds($genre_ids)
+    {
+        $this->genre_ids = $genre_ids;
     }
 }
-
-
 
 ?>
