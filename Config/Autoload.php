@@ -1,13 +1,14 @@
 <?php namespace Config;
-
-class Autoload {
-     public static function start() {
-          spl_autoload_register(function($classNotFound)
-          {
-               $url = ROOT . str_replace("\\", "/", $classNotFound)  . ".php";
-               $url = strtolower($url);
-               //include_once($url);
-          });
-     }
-}
+	
+    class Autoload {
+        
+        public static function Start() {
+            spl_autoload_register(function($className)
+			{
+                $classPath = ucwords(str_replace("\\", "/", ROOT.$className).".php");
+                
+				include_once($classPath);
+			});
+        }
+    }
 ?>
