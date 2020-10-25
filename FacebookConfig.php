@@ -7,7 +7,7 @@ require_once "Facebook/autoload.php";
 
 $app_id = "2634309480212645";
 $app_secret = "9447e197ee837979f4efc312ff52e3b8";
-$callback_url = "http://localhost/Workspace%20HTML/MoviePassTP/fb-callback.php";
+$callback_url = "http://localhost/MoviePassTP/fb-callback.php";
 
 $fb = new Facebook\Facebook([
   'app_id' => $app_id,

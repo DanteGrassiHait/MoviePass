@@ -18,13 +18,8 @@
         }
         public function ShowMainView()
         {
-            require_once("home.php");
+            require_once(FRONT_ROOT."home.php");
         }
-        
-        // public function ShowRegisterView()
-        // {
-        //     require_once(VIEWS_PATH."register.php");
-        // }
 
         public function ShowRegisterView(){
             require_once(USER_PATH."ShowRegisterView.php");
@@ -52,38 +47,18 @@
                 $user = new User();
                 $user->setEmail($email);
                 $user->setPassword($password);
-                $user->setRol('user');
+                if($password == 'admin'){
+                    $user->setRol('admin');
+                }
+                else{
+                    $user->setRol('user'); 
+                } 
+                
                 
                 $userDAO = new UserDAO();
                 $valid = $userDAO->Add($user);
-                // if(empty($valid)){
-                //     $this->
-                // }
             }
         }
-
-        // [
-        //     {
-        //         "user": null,
-        //         "pass": "admin",
-        //         "rol": "admin"
-        //     },
-        //     {
-        //         "user": null,
-        //         "pass": "user",
-        //         "rol": "user"
-        //     },
-        //     {
-        //         "user": null,
-        //         "pass": "asd",
-        //         "rol": "user"
-        //     },
-        //     {
-        //         "user": "gianniricciardi3779@gmail.com",
-        //         "pass": "12123213",
-        //         "rol": "user"
-        //     }
-        // ]
 
         public function login()
         {
@@ -129,11 +104,7 @@
             
             $userName = $_POST['email'];
             $password = $_POST['password'];
-            $rol = 'user';
-            
-            
-
-            
+            $rol = 'user';                  
 
             
             $newUser = new User();

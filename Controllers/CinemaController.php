@@ -44,10 +44,6 @@
             }
             
         }
-/*         public function ShowCinemaView($message = "")
-        {
-            require_once(VIEWS_PATH."mainCinema.php");
-        } */
         public function registerCinema($message = "")
         {
             require_once(VIEWS_PATH."auxi.php");

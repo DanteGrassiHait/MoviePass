@@ -22,9 +22,16 @@
     },
     {
         "id": 3,
-        "name": "cine",
+        "name": "Dante Grassi Hait",
         "address": "calle",
-        "ticket_price": "250",
-        "total_capacity": "500"
+        "ticket_price": "8966",
+        "total_capacity": "Mar del Plata"
+    },
+    {
+        "id": 4,
+        "name": "Dante Grassi Hait3",
+        "address": "calle",
+        "ticket_price": "85",
+        "total_capacity": "Mar del Plata"
     }
 ]
