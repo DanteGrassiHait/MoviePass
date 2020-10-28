@@ -53,15 +53,24 @@ File: Layout CSS
 
 /* Content Area
 --------------------------------------------------------------------------------------------------------------- */
-.container{padding:70px 0;}
+.container{
+	padding:70px 0;
+}
 
 /* Content */
 .container .content{}
 
-.form{
-	border: solid;
-    border-color: deeppink;
-    width: 15%;
+.form{	
+	width: 15%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+.rounded {
+    border-radius: .25rem!important;
 }
 
 .cines{
@@ -303,6 +312,10 @@ a:active, a:focus{background:transparent;}/* IE10 + 11 Bugfix - prevents grey ba
 hr, .borderedbox{border-color:#fc005f;}
 label span{color:#FF0000; background-color:inherit;}
 input:focus, textarea:focus, *:required:focus{border-color:#fc005f;}
+
+.bg-dark-transparent {
+    background-color: rgba(52,58,64,0.9);
+}
 
 .overlay{color:#FFFFFF; background-color:inherit;}
 .overlay::after{background-color:rgba(0,0,0,.55);}

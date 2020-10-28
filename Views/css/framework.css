@@ -58,7 +58,7 @@ h1, h2, h3, h4, h5, h6, .heading{font-family:Verdana;}
 
 /* Forms
 --------------------------------------------------------------------------------------------------------------- */
-form, fieldset, legend{margin:0; padding:0; border:none; border: 3mm;}
+form, fieldset, legend{margin:0; padding:0; border:none;}
 legend{display:none;}
 label, input, textarea, select, button{display:block; resize:none; outline:none; color:inherit; font-size:inherit; font-family:'Segoe UI', Tahoma, Geneva, Verdana; vertical-align:middle; }
 label{margin-bottom:5px;}
@@ -70,7 +70,7 @@ input, select{border: 1px solid #ced4da;border-radius: .25rem;width: 120px;}
 --------------------------------------------------------------------------------------------------------------- */
 h1, h2, h3, h4, h5, h6, .heading{margin:0 0 20px 0; font-size:1.4rem; line-height:normal; font-weight:normal; text-transform:capitalize;}
 
-.heading.nospace{margin-bottom:0;}
+.heading.nospace{margin-bottom:1.5rem!important;}
 .heading.underline{display:inline-block; position:relative; padding:0 0 15px 0;}
 .heading.underline::after{display:block; position:absolute; bottom:0; width:25%; height:5px; border-radius:3px; content:"";}
 .center .heading.underline::after{left:50%; margin-left:-12%;}
