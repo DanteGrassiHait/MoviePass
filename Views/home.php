@@ -8,7 +8,6 @@
                                    <form action="<?php echo FRONT_ROOT ?>User/login" method="POST" class="login-form bg-dark-alpha p-5 bg-light">
                                    <?php
                                         if(isset($error)){
-                                            
                                             echo "<div class='error' >Usuario y/o contraseña incorrecto</div>  ";     
                                         }                                         
                                    ?>

@@ -1,9 +1,9 @@
 <?php
 require_once(VIEWS_PATH."navUser.php");
 ?>
-<main class="d-flex align-items-center justify-content-center height-100" >
-<div class="cines" >
-    <div >
+<main class="d-flex align-items-center justify-content-center height-100 form bg-dark-transparent rounded" >
+<div>
+    <div>
         <div>
         <?php
             use DAO\CinemaDAO;
@@ -14,12 +14,9 @@ require_once(VIEWS_PATH."navUser.php");
                         
                         echo "<div>";
                             
-                              
                                 echo "<div class='data'>
                                         Nombre: ".$cinema->getName()."
-                                        </div>
-                                        "
-                                        ;
+                                        </div>";
                                 echo "<div class='data'>                                        
                                         Direccion: ".$cinema->getAddress()."
                                         </div>";
@@ -30,13 +27,8 @@ require_once(VIEWS_PATH."navUser.php");
                                         Capacidad Maxima: ".$cinema->getTotalCapacity()."
                                         </div>";
                             echo "</div>
-                                </div>";?>
-                                
-                              
-                        
-                            <?php
+                                </div>";
                         echo "<br></div>";
-                        
                         }
             ?>
         </div>

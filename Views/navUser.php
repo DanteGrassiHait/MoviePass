@@ -11,8 +11,8 @@ if(!isset($_SESSION['loggedUser'])){
 
   <div class="wrapper row1">
     <header id="header" class="hoc clear"> 
-      <div id="logo" class="fl_left">
-        <h1><a href="<?php //echo USERS_PATH; ?>homeUser.php"><img src="https://images.cooltext.com/5473653.gif"></a></h1>
+      <div id="logo" class="fl_left bottom">
+        <h1><a href="<?php //echo USERS_PATH; ?>homeUser.php"><img src="https://images.cooltext.com/5476130.png"></a></h1>
       </div>
       
       <nav id="mainav" class="fl_right">
