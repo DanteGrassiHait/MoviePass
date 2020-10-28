@@ -2,9 +2,9 @@
 require_once(VIEWS_PATH."navUser.php");
 ?>
 <main class="d-flex align-items-center justify-content-center height-100" >
-<div >
+<div class="cines" >
     <div >
-        <div >
+        <div>
         <?php
             use DAO\CinemaDAO;
             $cinemaDAO = new CinemaDAO();
@@ -39,8 +39,6 @@ require_once(VIEWS_PATH."navUser.php");
                         
                         }
             ?>
-        </div>
-        </div>
         </div>
     </div>
 </div>

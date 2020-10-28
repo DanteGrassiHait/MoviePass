@@ -2,9 +2,7 @@
     namespace Controllers;
     use DAO\CinemaDAO as CinemaDAO;
     Use Models\Cinema as Cinema;
-
     
-
     class CinemaController
     {
         private $cinemaDAO;
@@ -75,10 +73,10 @@
         
             if ($valid === 0){
                 $message = "Cinema name already in use, try another";
-                echo '<script language="javascript">alert("Cinema Name In Use");</script>';
+                //echo '<script language="javascript">alert("Cinema Name In Use");</script>';
             }else{
                 $message = "Cinema added successfully";
-                echo '<script language="javascript">alert("Your Cinema Has Been Registered Successfully");</script>';
+                //echo '<script language="javascript">alert("Your Cinema Has Been Registered Successfully");</script>';
             }
             $this->ShowAdminHomeView($message);
         
@@ -92,16 +90,12 @@
                 $this->cinemaDAO->Remove($id);
                 $this->ShowRemoveView("Eliminado con exito");
             }
-
-
         }
 
 
         public function editCinema(){
 
             $Cinema = new Cinema();
-
-
 
             if($_POST){
                 $id = $_POST["id"];
@@ -112,14 +106,8 @@
                 $Cinema->setTotalCapacity($_POST["total_capacity"]);
                 $this->cinemaDAO->Edit($Cinema);
                 $this->ShowAdminHomeView();
-
-
             }
-
-            
-                
         }
-
 
         public function showCinemas(){
             $cinemaList = array();

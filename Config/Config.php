@@ -16,6 +16,7 @@ define("IMG_PATH", FRONT_ROOT.VIEWS_PATH . "img/");
 define("USERS_PATH", FRONT_ROOT.VIEWS_PATH . "user/");
 define("USER_PATH", VIEWS_PATH . "user/");
 define("ADMIN_PATH", VIEWS_PATH . "admin/");
+define("ADMINS_PATH", FRONT_ROOT.VIEWS_PATH . "admin/");
 ?>
 
 

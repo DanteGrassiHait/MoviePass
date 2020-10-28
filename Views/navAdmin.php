@@ -11,7 +11,7 @@ if (!isset($_SESSION["loggedUser"])){
   <div class="wrapper row1">
     <header id="header" class="hoc clear"> 
       <div id="logo" class="fl_left">
-      <h1><a href="#"><img src="https://images.cooltext.com/5473653.gif"></a></h1>
+      <h1><a href="<?php //echo ADMINS_PATH; ?>homeAdmin.php"><img src="https://images.cooltext.com/5473653.gif"></a></h1>
       </div>
       
       <nav id="mainav" class="fl_right">
