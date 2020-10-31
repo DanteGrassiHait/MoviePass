@@ -10,68 +10,45 @@
 
 
     public function Add(User $user){
-        $this->RetrieveData();
-        foreach ($this->GetAll() as $value){
-            if ($user->getEmail() == $value->getEmail()){
-                return 0;
-            }
+        $sql = "INSERT INTO users (id_user, email, password, role) VALUES (:id_user, :email, :password, :role)";
+
+        $parameters['id_user'] = 0;
+        $parameters['email'] = $user->getEmail();
+        $parameters['password'] = $user->getPassword();
+        $parameters['role'] = 0;
+        try{
+            $this->connection = Connection::getInstance();
+            return $this->connection->executeNonQuery($sql, $parameters);
         }
-        array_push($this->userList,$user);    
-        $this->SaveData();
+        catch(\PDOException $ex){
+            throw $ex;
+        }
     }
 
-    public function GetAll(){
-        $this->RetrieveData();
-        return $this->userList;
+    public function read($email){
+
+        $sql = "SELECT * FROM users WHERE email = :email";
+        $parameters['email'] = $email;
+        try{
+            $this->connection = Connection::getInstance();
+            $result = $this->connection->execute($sql,$parameters);
+        }
+        catch(\PDOException $ex){
+            throw $ex;
+        }
+        if(!empty($result)){
+            return $this->map($result);
+        }
+        else
+            return false;
     }
 
-    public function CompareEmail($email){
-        $userList= $this->GetAll();
-        foreach ($userList as $user){
-            if ($user->getEmail() == $email){
-                return true;
-            }
-        }
-        return false;
-
-    }
-    
-
-    private function SaveData(){
-        $arrayToEncode = array();
-
-        foreach($this->userList as $user){
-            $valuesArray["user"] = $user->getEmail();
-            $valuesArray["pass"] = $user->getPassword();
-            $valuesArray["rol"] = $user->getRol();
-            //$valuesArray["client"] = $user->getClient();
-            array_push($arrayToEncode,$valuesArray);
-        }
-
-        $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
-        file_put_contents('Data/users.json', $jsonContent);
-    }
-
-    private function RetrieveData(){
-        
-        $this->userList = array();
-
-        if(file_exists('Data/users.json')){
-            $jsonContent = file_get_contents('Data/users.json');
-            $arrayToDecode = ($jsonContent) ? json_decode($jsonContent,true) : array();
-            
-            foreach($arrayToDecode as $valuesArray){
-
-                $user = new User();
-
-                $user->setEmail($valuesArray["user"]);
-                $user->setPassword($valuesArray["pass"]);
-                $user->setRol($valuesArray["rol"]);
-                //$user->setClient($valuesArray["client"]);
-                array_push($this->userList,$user);
-            }
-
-        }
+    public function map($value){
+        $value = is_array($value) ? $value : [];
+        $resp = array_map(function($p){
+            return new User($p['id_user'],$p['email'],$p['password'],$p['id_role']);
+        }, $value);
+        return count($resp) > 1 ? $resp : $resp['0'];
     }
 }
 ?>
