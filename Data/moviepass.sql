@@ -11,8 +11,10 @@ CREATE TABLE users (
   Constraint pk_user PRIMARY KEY(id_user),
   Constraint fk_id_role FOREIGN KEY (id_role) references roles (id_role));
 
-insert into roles (id_role, name) values (1, 'admin');
-insert into users (email, password, id_role) values ('admin@utn.com.ar', 'admin', 1);
+insert into roles (id_role, name) values (2, 'admin');
+insert into users (email, password, id_role) values ('admin@utn.com', 'admin', 1);
+insert into roles (id_role, name) values (0, 'user');
+insert into users (email, password, id_role) values ('user@utn.com', 'user', 2);
 
 select * from users;
 

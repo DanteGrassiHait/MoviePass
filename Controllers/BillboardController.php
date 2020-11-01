@@ -16,11 +16,6 @@
             $this->genreDAO = new GenreDAO();
         }
 
-        public function showBillboardView($message = "")
-        {
-            require_once(USER_PATH."billboard.php");
-        }
-
         public function showMovies($id = "")
         {
             if(!($id == "")){
@@ -49,6 +44,31 @@
             }
 
             return $genre_movie_list;
+        }
+
+        public function getActiveGenres()
+        {
+            $complete_genre_list = $this->genreDAO->getAllGenres();
+            $movies_now_playing = $this->movieDAO->getAllMovies();
+            $active_genres_ids = array();
+            foreach($movies_now_playing as $movie)
+            {
+                foreach($movie->getGenreIds() as $genre_id)
+                {
+                    array_push($active_genres_ids, $genre_id);
+                }                
+            }
+            $active_genres_ids = array_unique($active_genres_ids);
+            $active_genres = array();
+            
+            foreach($active_genres_ids as $value)
+            {
+                if($value)
+                {
+                    array_push($active_genres, $this->genreDAO->getGenreById($value));
+                }
+            }
+            return $active_genres;
         }
     }
 ?>

@@ -1,9 +1,20 @@
 <?php
 
+use Controllers\CinemaController;
+use DAO\CinemaDAO;
+Use Models\User as User;
 
-if (!isset($_SESSION["loggedUser"])){
-  header("location:../Home/Index");
-  exit;
+
+
+$cinemaController = new CinemaController();
+$cinemaDAO = new CinemaDAO();
+$cinemaList = $cinemaDAO->GetAll();
+
+if(!isset($_SESSION['loggedUser'])){
+  if ($user->getRol() != 'admin'){
+    header("location:../Home/Index");
+    exit;
+  }
 }
 
 

@@ -38,7 +38,6 @@
                 $cinemaList = $this->cinemaDAO->GetAll();
                 $Cinema = $this->cinemaDAO->returnCinemaById($id);
                 require_once(ADMIN_PATH."edit_cinema.php");
-
             }
             
         }
@@ -50,53 +49,62 @@
         
         public function register(){
             
-            
             $name = $_POST['name'];
             $address = $_POST['address'];
-            $ticket_price = $_POST['ticket_price'];
-            $total_capacity = $_POST['total_capacity'];
 
-            $id = sizeof($this->cinemaDAO->GetAll());
-
-            $newCinema = new Cinema();
-            
-            $newCinema->setId($id);
-            $newCinema->setName($name);
-            $newCinema->setAddress($address);
-            $newCinema->setTicketPrice($ticket_price);
-            $newCinema->setTotalCapacity($total_capacity);
-            
-
-
-            $newCinemaRepository = new CinemaDAO();
-            $valid = $newCinemaRepository->Add($newCinema);
-        
-            if ($valid === 0){
-                $message = "Cinema name already in use, try another";
-                //echo '<script language="javascript">alert("Cinema Name In Use");</script>';
-            }else{
-                $message = "Cinema added successfully";
-                //echo '<script language="javascript">alert("Your Cinema Has Been Registered Successfully");</script>';
+            $name = trim($name);
+            if(empty($name))
+            {
+                $_SESSION['msg'] = 'complete los campos';
+                require_once(ADMIN_PATH."add_cinema.php");
             }
-            $this->ShowAdminHomeView($message);
-        
+            else{
+                try{
+                    if(! $this->checkCinema($_POST['name']))
+                    {
+                        $cinema = new Cinema(0,$_POST['name'] , $_POST['address']);
+                        $this->cinemaDAO->Add($cinema);
+                        $_SESSION['msg'] = "Cine agregado correctamente";
+                    }
+                    else{
+                        $_SESSION['msg'] = "el cine ya se encuentra registrado";
+                        require_once(ADMIN_PATH."add_cinema.php");
+                    }
+                    
+                }
+                catch(\PDOException $ex){
+                    $message = "Exception";
+                    throw $ex;
+                }
+                finally{
+                    require_once(ADMIN_PATH."homeAdmin.php");
+                }
+            }
+            
         }
 
         public function removeCinema(){
             
             if($_POST){
-                
-                $id = number_format($_POST["id"]);
-                $this->cinemaDAO->Remove($id);
+                $name = $_POST["name"];
+                $this->cinemaDAO->Remove($name);
                 $this->ShowRemoveView("Eliminado con exito");
             }
+        }
+
+        public function checkCinema($name)
+        {
+            $cinema = $this->cinemaDAO->read($name);
+            if($cinema)
+                return true;
+            else
+                false;
         }
 
 
         public function editCinema(){
 
             $Cinema = new Cinema();
-
             if($_POST){
                 $id = $_POST["id"];
                 $Cinema->setId( intval($id));
@@ -107,12 +115,6 @@
                 $this->cinemaDAO->Edit($Cinema);
                 $this->ShowAdminHomeView();
             }
-        }
-
-        public function showCinemas(){
-            $cinemaList = array();
-            $cinemaList = $this->cinemaDAO->GetAll();
-            require_once(VIEWS_PATH."cinemaManagment.php");
         }
     }
 ?>

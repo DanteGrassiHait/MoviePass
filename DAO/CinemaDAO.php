@@ -4,9 +4,8 @@
     use Models\Cinema as Cinema;
 
     class CinemaDAO{
-
-    private $CinemaList = array();
-    private $fileName;
+        
+    private $connection;
 
     public function Add(Cinema $Cinema){
         $sql = "INSERT INTO cinemas (id_cinema, name, address, total_capacity) VALUES (:id_cinema, :name, :address, :total_capacity)";
@@ -14,7 +13,6 @@
         $parameters['id_cinema'] = 0;
         $parameters['name'] = $Cinema->getName();
         $parameters['address'] = $Cinema->getAddress();
-        $parameters['total_capacity'] = $Cinema->getTotalCapacity();
         try{
             $this->connection = Connection::getInstance();
             return $this->connection->executeNonQuery($sql, $parameters);
@@ -27,7 +25,7 @@
     public function Edit(Cinema $Cinema){
         $sql = "INSERT INTO cinemas (id_cinema, name, address, total_capacity) VALUES (:id_cinema, :name, :address, :total_capacity)";
 
-        $parameters['id_cinema'] = 0;
+        $parameters['id_cinema'] = $Cinema->getId();
         $parameters['name'] = $Cinema->getName();
         $parameters['address'] = $Cinema->getAddress();
         $parameters['total_capacity'] = $Cinema->getTotalCapacity();

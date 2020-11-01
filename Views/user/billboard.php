@@ -1,5 +1,18 @@
 <?php
-require_once(VIEWS_PATH."navUser.php");
+if(isset($_SESSION['loggedUser']))
+{
+  if ($_SESSION['loggedUser']->getRol() == 'admin'){
+    require_once(VIEWS_PATH."navAdmin.php");
+  }
+  else{
+    require_once(VIEWS_PATH."navUser.php");
+  }
+}
+else
+{
+  header("location:../Home/Index");
+  exit;
+}
 ?>
 
 <div id="mainav">

@@ -3,6 +3,7 @@
 
     use DAO\UserDAO as UserDAO;
     Use Models\User as User;
+    use Controllers\BillboardController;
 
     class UserController
     {
@@ -14,7 +15,9 @@
 
         public function ShowMenuView($message)
         {
-            require_once(USER_PATH."homeUser.php");
+            $billboard = new BillboardController();
+            $billboard->ShowMovies();
+            require_once(USERS_PATH."billboard.php");
         }
         public function ShowMainView()
         {
@@ -22,7 +25,7 @@
         }
 
         public function ShowRegisterView(){
-            require_once(USER_PATH."ShowRegisterView.php");
+            require_once(USERS_PATH."ShowRegisterView.php");
         }
 
         public function ShowAdminMenuView($message)
@@ -36,135 +39,77 @@
             require_once(USER_PATH."registerAdmin.php");
         }
 
-        public function RegisterNew(){
-            if($_POST){
-                $email = isset($_POST["email"]) ? $_POST["email"] : "";
-                $password = isset($_POST["password"]) ? $_POST["password"] : "";
-                $name = isset($_POST["name"]) ? $_POST["name"] : "";
-                $lastName = isset($_POST["lastName"]) ? $_POST["lastName"] : "";
-                $id = isset($_POST["id"]) ? $_POST["id"] : "";
-                
-                $user = new User();
-                $user->setEmail($email);
-                $user->setPassword($password);
-                if($password == 'admin'){
-                    $user->setRol('admin');
-                }
-                else{
-                    $user->setRol('user'); 
-                } 
-                
-                
-                $userDAO = new UserDAO();
-                $valid = $userDAO->Add($user);
-            }
+        public function checkUser($email)
+        {
+            $user = $this->userDAO->read($email);
+            if($user)
+                return true;
+            else
+                false;
         }
 
         public function login()
         {
             $email = $_POST["email"];
             $password = $_POST["password"];
-            $userList = $this->userDAO->GetAll();
-           
-            $count = 0;
-            $error = NULL;
-
-            foreach($userList as $user){
-                if(($user -> getEmail() == $email) && ($user -> getPassword() == $password)){
-
-                    $count = 1;
-                    
-                    $loggedUser = new User();
-                    $loggedUser->setEmail($email);
-                    $loggedUser->setPassword($password);
-                    $loggedUser->setRol($user->getRol());
-
-                    $_SESSION["loggedUser"] = $loggedUser;
-                    
-                    $message = "Login Successfully";
-                    if($user->getRol() == 'user')
-                    {
-                        $this->ShowMenuView($message);
+            try{
+                if($this->checkUser($email))
+                {
+                    $user = $this->userDAO->read($email);
+                    if($user->getPassword() == $password){
+                        $_SESSION["loggedUser"] = $user;
+                        $message = "Login Successfully";
+                        if($user->getRol() == 2) //user
+                        {
+                            $_SESSION['home'] = FRONT_ROOT.'Billboard/showMovies';
+                            header("location:ShowMenuView");
+                        }
+                        else if ($user->getRol() == 1) //admin
+                        {
+                            $_SESSION['home'] = FRONT_ROOT.'Cinema/ShowAdminHomeView';
+                            $this->ShowAdminMenuView($message);
+                        }   
                     }
-                    else if ($user->getRol() == 'admin')
-                    {
-                        $this->ShowAdminMenuView($message);
-                    }
-                    
+                    else{
+                        $message = "Wrong Username or Password";
+                    } 
+                }
+                else
+                {
+                    $message= "Wrong Username";
+                    require_once(VIEWS_PATH."home.php");
                 }
             }
-            if ($count === 0){
-                $error = 1;
-                require_once(VIEWS_PATH."home.php");
+            catch(\PDOException $ex){
             }
-           
         }  
         
         public function register(){
-            
-            $userName = $_POST['email'];
+            $email = $_POST['email'];
             $password = $_POST['password'];
-            $rol = 'user';                  
-
-            
-            $newUser = new User();
-        
-            $newUser->setEmail($userName);
-            $newUser->setPassword($password);
-            $newUser->setRol($rol);
-            //$newUser ->setClient($newClient);
-
-        
-            $newUserRepository = new UserDAO();
-            $valid = $newUserRepository->Add($newUser);
-        
-            if ($valid === 0){
-                $error = "invalid";
-                require_once(VIEWS_PATH."register.php");
-            }else{
-                //usar require ya que permite el pasaje de la variable para mensajes, si uso la funcion show no puedo pasar vars.
-                $error = "03";
-                require_once(VIEWS_PATH."main.php");
+            try{
+                if(! $this->checkUser($_POST['email']))
+                {
+                    $user = new User(null, $_POST['email'] , $_POST['password'] , 0);
+                    $this->userDAO->Add($user);
+                    $message = "Usuario registrado correctamente";
+                }
+                else
+                    $message = "El usuario ya se encuentra registrado";
             }
-        
-        }
-        /*
-        public function registerAdmin(){
-            
-            $userName = $_POST['email'];
-            $password = $_POST['password'];
-            $rol = 'admin';
-            
-            $newUser = new User();
-        
-            $newUser->setEmail($userName);
-            $newUser->setPassword($password);
-            $newUser->setRol($rol);
-
-        
-            $newUserRepository = new UserDAO();
-            $valid = $newUserRepository->Add($newUser);
-        
-            if ($valid === 0){
-                $error = "invalid";
-                require_once(VIEWS_PATH.ADMIN_PATH."registerAdmin.php");
-            }else{
-                //usar require ya que permite el pasaje de la variable para mensajes, si uso la funcion show no puedo pasar vars.
-                $error = "03";
-                require_once(VIEWS_PATH."main.php");
+            catch(\PDOException $ex){
+                $message = "Exception";
+                throw $ex;
             }
-        
+            finally{
+                require_once(VIEWS_PATH."home.php");
+            }
         }
-        */
 
         public function logout(){
-
             session_destroy();
-
             $message = "Logout Successfully";
-
             $this->ShowMainView($message);
         }
-        
     }
 ?>

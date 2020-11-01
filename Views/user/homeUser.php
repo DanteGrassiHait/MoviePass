@@ -9,11 +9,8 @@ require_once(VIEWS_PATH."navUser.php");
             use DAO\CinemaDAO;
             $cinemaDAO = new CinemaDAO();
             $cinemaList = $cinemaDAO->GetAll();
-            
-                        foreach($cinemaList as $cinema){
-                        
+            foreach($cinemaList as $cinema){
                         echo "<div>";
-                            
                                 echo "<div class='data'>
                                         Nombre: ".$cinema->getName()."
                                         </div>";
@@ -29,8 +26,8 @@ require_once(VIEWS_PATH."navUser.php");
                             echo "</div>
                                 </div>";
                         echo "<br></div>";
-                        }
-            ?>
+                }
+        ?>
         </div>
     </div>
 </div>
