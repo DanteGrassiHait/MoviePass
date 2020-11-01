@@ -2,18 +2,17 @@
 
 class User
 {
-    
+    private $id;
 	private $email;
 	private $password;
 	private $rol;
-    
-    public function __construct()
-	{
-		$this->setEmail(NULL);
-		$this->setPassword(NULL);
-		$this->setRol(NULL);
-    }
 
+    public function __construct($id,$email, $password,$rol){
+        $this->id= $id;
+        $this->email = $email;
+        $this->password = $password;
+        $this->rol = $rol;
+    }
     
     public function getId()
     {

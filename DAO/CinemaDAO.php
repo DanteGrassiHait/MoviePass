@@ -2,6 +2,8 @@
     namespace DAO;
 
     use Models\Cinema as Cinema;
+    use DAO\Connection as Connection;
+    use PDOException;
 
     class CinemaDAO{
         
@@ -17,7 +19,7 @@
             $this->connection = Connection::getInstance();
             return $this->connection->executeNonQuery($sql, $parameters);
         }
-        catch(\PDOException $ex){
+        catch(PDOException $ex){
             throw $ex;
         }
     }
@@ -33,7 +35,7 @@
             $this->connection = Connection::getInstance();
             return $this->connection->executeNonQuery($sql, $parameters);
         }
-        catch(\PDOException $ex){
+        catch(PDOException $ex){
             throw $ex;
         }
     }
@@ -45,7 +47,7 @@
             $this->connection = Connection::getInstance();
             return $this->connection->executeNonQuery($sql, $parameters);
         }
-        catch(\PDOException $ex){
+        catch(PDOException $ex){
             throw $ex;
         }
     }
@@ -57,7 +59,7 @@
             $this->connection = Connection::getInstance();
             $result = $this->connection->execute($sql,$parameters);
         }
-        catch(\PDOException $ex){
+        catch(PDOException $ex){
             throw $ex;
         }
         if(!empty($result))
@@ -69,25 +71,29 @@
     public function map($value){
         $value = is_array($value) ? $value : [];
         $resp = array_map(function($p){
-            return new Cinema($p['id_cinema'],$p['name'],$p['address'],$p['total_capacity']);
+            return new Cinema($p['id_cinema'],$p['name'],$p['address'],$p['ticket_price'], $p['total_capacity']);
         }, $value);
         return count($resp) > 0 ? $resp : $resp['0'];
     }
 
-    public function GetAll(){
+    public function GetAll()
+    {
         $sql = "SELECT * FROM cinemas";
-        try{
+        try
+        {
             $this->connection = Connection::getInstance();
-            $result = $this->connection->execute($sql);
+            $resultSet = $this->connection->execute($sql);
         }
-        catch(\PDOException $ex){
-            throw $ex;
+        catch(PDOException $e)
+        {
+            echo $e;
         }
-        if(!empty($result))
-            return $this->map($result);
+        if(!empty($resultSet))
+            return $this->map($resultSet);
         else
             return false;
     }
+
 
     public function CompareName($name){
         $CinemaList= $this->GetAll();

@@ -2,10 +2,15 @@
     namespace DAO;
 
     use Models\User as User;
+    use DAO\Connection as Connection;
+    use PDOException;
 
     class UserDAO{
-
         private $connection;
+        public function __construct()
+        {
+            $this->connection = null;
+        }
 
     public function Add(User $user){
         $sql = "INSERT INTO users (id_user, email, password, id_role) VALUES (:id_user, :email, :password, :id_role)";
@@ -18,7 +23,7 @@
             $this->connection = Connection::getInstance();
             return $this->connection->executeNonQuery($sql, $parameters);
         }
-        catch(\PDOException $ex){
+        catch(PDOException $ex){
             throw $ex;
         }
     }
@@ -31,7 +36,7 @@
             $this->connection = Connection::getInstance();
             $result = $this->connection->execute($sql,$parameters);
         }
-        catch(\PDOException $ex){
+        catch(PDOException $ex){
             throw $ex;
         }
         if(!empty($result)){
@@ -40,13 +45,14 @@
         else
             return false;
     }
-
-    public function map($value){
+    
+    protected function map($value) {
         $value = is_array($value) ? $value : [];
         $resp = array_map(function($p){
-            return new User($p['id_user'],$p['email'],$p['password'],$p['id_role']);
+            return new User( $p['id_user'],$p['email'], $p['password'], $p['id_role']);
         }, $value);
-        return count($resp) > 1 ? $resp : $resp['0'];
-    }
+            /* devuelve un arreglo si tiene datos y sino devuelve nulo*/
+            return count($resp) > 1 ? $resp : $resp['0'];
+     }
 }
 ?>

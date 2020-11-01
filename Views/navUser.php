@@ -1,6 +1,6 @@
 <?php
 Use Models\User as User;
-$user = new User;
+$user = new User(NULL, NULL, NULL, NULL);
 $user = $_SESSION['loggedUser'];
 
 if(!isset($_SESSION['loggedUser'])){

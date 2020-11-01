@@ -17,7 +17,6 @@
         {
             $billboard = new BillboardController();
             $billboard->ShowMovies();
-            require_once(USERS_PATH."billboard.php");
         }
         public function ShowMainView()
         {
@@ -53,32 +52,25 @@
             $email = $_POST["email"];
             $password = $_POST["password"];
             try{
-                if($this->checkUser($email))
-                {
-                    $user = $this->userDAO->read($email);
+                    $user = $this->userDAO->read($_POST["email"]);
+                    //var_dump($user);
                     if($user->getPassword() == $password){
                         $_SESSION["loggedUser"] = $user;
                         $message = "Login Successfully";
                         if($user->getRol() == 2) //user
                         {
                             $_SESSION['home'] = FRONT_ROOT.'Billboard/showMovies';
-                            header("location:ShowMenuView");
+                            $this->ShowMenuView($message);
                         }
                         else if ($user->getRol() == 1) //admin
                         {
                             $_SESSION['home'] = FRONT_ROOT.'Cinema/ShowAdminHomeView';
                             $this->ShowAdminMenuView($message);
                         }   
+                    }else{
+                        $message= "Wrong Username";
+                        require_once(VIEWS_PATH."home.php");
                     }
-                    else{
-                        $message = "Wrong Username or Password";
-                    } 
-                }
-                else
-                {
-                    $message= "Wrong Username";
-                    require_once(VIEWS_PATH."home.php");
-                }
             }
             catch(\PDOException $ex){
             }

@@ -6,7 +6,7 @@ require_once(VIEWS_PATH."navAdmin.php");
     <div>
         <div>
             <?php
-            use DAO\CinemaDAO;
+            use DAO\CinemaDAO as CinemaDAO;
             $cinemaDAO = new CinemaDAO();
             $cinemaList = $cinemaDAO->GetAll();
             foreach($cinemaList as $cinema){

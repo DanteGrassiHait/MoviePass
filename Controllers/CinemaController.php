@@ -50,8 +50,9 @@
         public function register(){
             
             $name = $_POST['name'];
+            $total_capacity = $_POST['total_capacity'];
             $address = $_POST['address'];
-
+            $ticket_price = $_POST['ticket_price'];
             $name = trim($name);
             if(empty($name))
             {
@@ -62,7 +63,7 @@
                 try{
                     if(! $this->checkCinema($_POST['name']))
                     {
-                        $cinema = new Cinema(0,$_POST['name'] , $_POST['address']);
+                        $cinema = new Cinema($_POST['name'] , $_POST['address'], $_POST['ticket_price'], $_POST['total_capacity']);
                         $this->cinemaDAO->Add($cinema);
                         $_SESSION['msg'] = "Cine agregado correctamente";
                     }
@@ -84,7 +85,6 @@
         }
 
         public function removeCinema(){
-            
             if($_POST){
                 $name = $_POST["name"];
                 $this->cinemaDAO->Remove($name);
@@ -103,15 +103,8 @@
 
 
         public function editCinema(){
-
-            $Cinema = new Cinema();
             if($_POST){
-                $id = $_POST["id"];
-                $Cinema->setId( intval($id));
-                $Cinema->setName($_POST["name"]);
-                $Cinema->setAddress($_POST["address"]);
-                $Cinema->setTicketPrice($_POST["ticket_price"]);
-                $Cinema->setTotalCapacity($_POST["total_capacity"]);
+                $Cinema = new Cinema($_POST['name'] , $_POST['address'], $_POST['ticket_price'], $_POST['total_capacity']);
                 $this->cinemaDAO->Edit($Cinema);
                 $this->ShowAdminHomeView();
             }
