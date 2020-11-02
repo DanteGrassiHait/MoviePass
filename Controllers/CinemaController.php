@@ -39,7 +39,6 @@
                 $Cinema = $this->cinemaDAO->returnCinemaById($id);
                 require_once(ADMIN_PATH."edit_cinema.php");
             }
-            
         }
         public function registerCinema($message = "")
         {
@@ -48,7 +47,6 @@
 
         
         public function register(){
-            
             $name = $_POST['name'];
             $total_capacity = $_POST['total_capacity'];
             $address = $_POST['address'];
@@ -62,7 +60,7 @@
             else{
                 try{
                     if(! $this->checkCinema($_POST['name']))
-                    {
+                    { 
                         $cinema = new Cinema($_POST['name'] , $_POST['address'], $_POST['ticket_price'], $_POST['total_capacity']);
                         $this->cinemaDAO->Add($cinema);
                         $_SESSION['msg'] = "Cine agregado correctamente";
@@ -71,7 +69,6 @@
                         $_SESSION['msg'] = "el cine ya se encuentra registrado";
                         require_once(ADMIN_PATH."add_cinema.php");
                     }
-                    
                 }
                 catch(\PDOException $ex){
                     $message = "Exception";
@@ -105,7 +102,7 @@
         public function editCinema(){
             if($_POST){
                 $Cinema = new Cinema($_POST['name'] , $_POST['address'], $_POST['ticket_price'], $_POST['total_capacity']);
-                $this->cinemaDAO->Edit($Cinema);
+                $this->cinemaDAO->Edit($Cinema);                
                 $this->ShowAdminHomeView();
             }
         }

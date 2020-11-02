@@ -1,4 +1,4 @@
-#drop database moviepass;
+drop database moviepass;
 create database moviepass;
 use moviepass;
 
@@ -16,6 +16,7 @@ CREATE TABLE users (
   Constraint pk_user PRIMARY KEY(id_user),
   Constraint fk_id_role FOREIGN KEY (id_role) references roles (id_role));
 
+SELECT * FROM users WHERE email = 'user@utn.com';
 insert into roles (name) values ('admin');
 insert into users (email, password, id_role) values ('admin@utn.com', 'admin', 1);
 insert into roles (name) values ('user');
@@ -27,10 +28,13 @@ CREATE TABLE cinemas (
 id_cinema INT NOT NULL auto_increment,
 name varchar(50) not null,
 address varchar(50) not null,
+ticket_price INT NOT NULL,
 total_capacity INT NOT NULL,
 Constraint pk_cinema PRIMARY KEY(id_cinema));
 
 select * from cinemas;
+insert into cinemas(name, address, ticket_price, total_capacity) values ('Ambassador', 'San Luis 1538', 250, 500);
+#drop table cinemas;
 
 create table genres(
 id_genre INT NOT NULL auto_increment,

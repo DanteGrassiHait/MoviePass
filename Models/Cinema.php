@@ -13,7 +13,7 @@ class Cinema
         $this->name = $name;
         $this->address = $address;
         $this->ticket_price = $ticket_price;
-        $this->$total_capacity = $total_capacity;
+        $this->total_capacity = $total_capacity;
     }
 
 

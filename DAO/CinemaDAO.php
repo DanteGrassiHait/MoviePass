@@ -1,77 +1,84 @@
 <?php
-    namespace DAO;
 
-    use Models\Cinema as Cinema;
-    use DAO\Connection as Connection;
-    use PDOException;
+namespace DAO;
 
-    class CinemaDAO{
-        
+use Models\Cinema as Cinema;
+use DAO\Connection as Connection;
+use PDOException;
+
+class CinemaDAO
+{
+
     private $connection;
 
-    public function Add(Cinema $Cinema){
-        $sql = "INSERT INTO cinemas (id_cinema, name, address, total_capacity) VALUES (:id_cinema, :name, :address, :total_capacity)";
+    public function Add(Cinema $Cinema)
+    {
+        $sql = "INSERT INTO cinemas (id_cinema, name, address, ticket_price, total_capacity) VALUES (:id_cinema, :name, :address, :ticket_price, :total_capacity)";
 
         $parameters['id_cinema'] = 0;
         $parameters['name'] = $Cinema->getName();
         $parameters['address'] = $Cinema->getAddress();
-        try{
+        $parameters['ticket_price'] = $Cinema->getTicketPrice();
+        $parameters['total_capacity'] = $Cinema->getTotalCapacity();
+        try {
             $this->connection = Connection::getInstance();
             return $this->connection->executeNonQuery($sql, $parameters);
-        }
-        catch(PDOException $ex){
+        } catch (PDOException $ex) {
             throw $ex;
         }
     }
 
-    public function Edit(Cinema $Cinema){
-        $sql = "INSERT INTO cinemas (id_cinema, name, address, total_capacity) VALUES (:id_cinema, :name, :address, :total_capacity)";
+    public function Edit(Cinema $Cinema)
+    {
+        //$sql = "INSERT INTO cinemas (id_cinema, name, address, ticket_price, total_capacity) VALUES (:id_cinema, :name, :address, :ticket_price, :total_capacity)";
+        $sql = "UPDATE cinemas SET name = :name, address = :address,ticket_price = :ticket_price, total_capacity = :total_capacity WHERE id_cinema = :id_cinema";
 
         $parameters['id_cinema'] = $Cinema->getId();
         $parameters['name'] = $Cinema->getName();
         $parameters['address'] = $Cinema->getAddress();
+        $parameters['ticket_price'] = $Cinema->getTicketPrice();
         $parameters['total_capacity'] = $Cinema->getTotalCapacity();
-        try{
+        try {
             $this->connection = Connection::getInstance();
             return $this->connection->executeNonQuery($sql, $parameters);
-        }
-        catch(PDOException $ex){
+        } catch (PDOException $ex) {
             throw $ex;
         }
     }
 
-    public function Remove($name){
+    public function Remove($name)
+    {
         $sql = "DELETE FROM cinemas WHERE name = :name";
         $parameters['name'] = $name;
-        try{
+        try {
             $this->connection = Connection::getInstance();
             return $this->connection->executeNonQuery($sql, $parameters);
-        }
-        catch(PDOException $ex){
+        } catch (PDOException $ex) {
             throw $ex;
         }
     }
 
-    public function read($name){
+    public function read($name)
+    {
         $sql = "SELECT * FROM cinemas WHERE name = :name";
         $parameters['name'] = $name;
-        try{
+        try {
             $this->connection = Connection::getInstance();
-            $result = $this->connection->execute($sql,$parameters);
-        }
-        catch(PDOException $ex){
+            $result = $this->connection->execute($sql, $parameters);
+        } catch (PDOException $ex) {
             throw $ex;
         }
-        if(!empty($result))
+        if (!empty($result))
             return $this->map($result);
         else
             return false;
     }
 
-    public function map($value){
+    public function map($value)
+    {
         $value = is_array($value) ? $value : [];
         $resp = array_map(function($p){
-            return new Cinema($p['id_cinema'],$p['name'],$p['address'],$p['ticket_price'], $p['total_capacity']);
+            return new Cinema( $p['name'], $p['address'], $p['ticket_price'], $p['total_capacity']);
         }, $value);
         return count($resp) > 0 ? $resp : $resp['0'];
     }
@@ -79,40 +86,38 @@
     public function GetAll()
     {
         $sql = "SELECT * FROM cinemas";
-        try
-        {
+        try {
             $this->connection = Connection::getInstance();
             $resultSet = $this->connection->execute($sql);
-        }
-        catch(PDOException $e)
-        {
+        } catch (PDOException $e) {
             echo $e;
         }
-        if(!empty($resultSet))
+        if (!empty($resultSet))
             return $this->map($resultSet);
         else
             return false;
     }
 
 
-    public function CompareName($name){
-        $CinemaList= $this->GetAll();
-        foreach ($CinemaList as $Cinema){
-            if ($Cinema->getName() == $name){
+    public function CompareName($name)
+    {
+        $CinemaList = $this->GetAll();
+        foreach ($CinemaList as $Cinema) {
+            if ($Cinema->getName() == $name) {
                 return true;
             }
         }
         return false;
     }
 
-    public function returnCinemaById($id){
-        $CinemaList= $this->GetAll();
-        foreach ($CinemaList as $Cinema){
-            if ($Cinema->getId() == $id){
+    public function returnCinemaById($id)
+    {
+        $CinemaList = $this->GetAll();
+        foreach ($CinemaList as $Cinema) {
+            if ($Cinema->getId() == $id) {
                 return $Cinema;
             }
         }
         return false;
     }
 }
-?>
